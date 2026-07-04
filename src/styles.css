@@ -731,6 +731,126 @@ tbody tr:last-child th {
   color: var(--ink-1);
 }
 
+/* ---------- comps panel ---------- */
+
+.comps-intro {
+  margin-top: -4px;
+  margin-bottom: 10px;
+}
+
+.comps-form {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.comps-form .nf {
+  margin: 0;
+  flex: 0 1 120px;
+}
+
+.comps-form .comps-address {
+  flex: 2 1 260px;
+}
+
+.comps-address input {
+  text-align: left;
+  font-variant-numeric: normal;
+}
+
+.comps-run {
+  height: 34px;
+}
+
+.comps-key {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--ink-2);
+}
+
+.comps-key summary {
+  cursor: pointer;
+  color: var(--ink-muted);
+}
+
+.comps-key-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.comps-key-row input {
+  flex: 1 1 200px;
+  min-width: 0;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--page);
+  color: var(--ink-1);
+}
+
+.comps-status {
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  margin: 10px 2px 0;
+}
+
+.comps-error {
+  color: var(--ink-1);
+  background: color-mix(in srgb, #d03b3b 12%, var(--surface-1));
+  border: 1px solid color-mix(in srgb, #d03b3b 40%, var(--border));
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  margin: 10px 0 0;
+}
+
+.comps-meta {
+  margin-top: 12px;
+}
+
+.comps-buckets {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.comps-use {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+}
+
+.comps-table {
+  max-height: 320px;
+}
+
+.comps-addr {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.comps-tags {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 0.7rem;
+  color: var(--ink-2);
+  background: var(--page);
+  white-space: nowrap;
+}
+
 /* ---------- utilities ---------- */
 
 .sr-only {

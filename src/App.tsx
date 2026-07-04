@@ -11,6 +11,7 @@ import { PaymentSplitChart } from "./charts/PaymentSplitChart";
 import { seriesColor } from "./charts/chartUtils";
 import { AmortizationTable } from "./components/AmortizationTable";
 import { CompareTable } from "./components/CompareTable";
+import { CompsPanel } from "./components/CompsPanel";
 import { LoanForm } from "./components/LoanForm";
 import { SavedPlans } from "./components/SavedPlans";
 import { ScenarioTabs } from "./components/ScenarioTabs";
@@ -152,6 +153,17 @@ export default function App() {
 
           <div className="card">
             <AmortizationTable rows={activeSchedule.rows} />
+          </div>
+
+          <div className="card">
+            <CompsPanel
+              onUseHomePrice={(price) =>
+                patchActive({
+                  homePrice: price,
+                  downPayment: Math.min(active.inputs.downPayment, price),
+                })
+              }
+            />
           </div>
         </section>
       </div>

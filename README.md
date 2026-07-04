@@ -6,9 +6,10 @@ biggest purchase.
 
 Generic fixed-rate amortization core with a **US cost layer** (property tax,
 homeowners insurance, PMI with the 80%-LTV auto-drop, HOA), **extra-payment
-modeling**, **up to four side-by-side scenarios**, and **shareable plans**
-(URL + localStorage). All math runs in the browser; there is no backend and
-no network I/O.
+modeling**, **up to four side-by-side scenarios**, **shareable plans**
+(URL + localStorage), and an optional **comparable-sales lookup** (recent
+sold prices near an address). All loan math runs in the browser with no
+backend; only the comps feature calls external APIs.
 
 ## Quick start
 
@@ -44,6 +45,34 @@ npm run preview    # serve the production build
   session, and a "Copy link" button that encodes the whole plan into the URL
   (base64url JSON in the `p` query parameter).
 
+## Comps — recent sales nearby
+
+Enter a street address plus target beds/baths and Njord finds sold prices of
+similar homes (±1 bed/bath, last 3 years), bucketed three ways: **same
+street**, **nearby streets** (≤0.5 mi), and **same school district**. Any
+bucket's median can be pushed into the active scenario's home price.
+
+Data sources (`src/comps/`):
+
+| Step | Service | Auth |
+| --- | --- | --- |
+| Address → coordinates, street, ZIP, district GEOID | US Census geocoder (JSONP — the service sends no CORS headers) | none |
+| District GEOID → boundary polygon | Census TIGERweb ArcGIS REST (`TIGERweb/School`, layers 0/1/2) | none |
+| Recently-sold houses in the ZIP | `zillow-com1` on RapidAPI | your RapidAPI key |
+
+**Zillow reality check:** Zillow retired its official public API, so sold
+data comes from a community RapidAPI provider that mirrors Zillow search.
+Create a free RapidAPI account, subscribe to the `zillow-com1` API's free
+tier, and paste the key into the panel (stored in localStorage only — never
+in share URLs or saved plans; same for the address). Respect the provider's
+and Zillow's terms; quotas on free tiers are small, so results are cached
+locally and each run fetches at most two pages.
+
+Known limitations: the sales search covers the subject's ZIP, so the
+school-district bucket only tags sales *within that ZIP*; classification
+trusts the provider's beds/baths/coordinates; sales with no sold date are
+dropped.
+
 ## Engine assumptions (deliberate simplifications)
 
 The engine ([src/engine/mortgage.ts](src/engine/mortgage.ts)) is a standard
@@ -69,6 +98,7 @@ costs, refinancing, tax deductions.
 | `src/engine/` | Pure loan math + schedule types. No React, no I/O. |
 | `src/state/` | Plan model + sanitize gate, defaults, URL codec, localStorage. |
 | `src/charts/` | Hand-rolled SVG charts (dataviz-spec marks, tooltips, legends). |
+| `src/comps/` | Comparable-sales pipeline: geocode, district polygon, sold-search provider, pure classification. |
 | `src/components/` | Form, tabs, KPI tiles, tables, saved-plans panel. |
 | `src/App.tsx` | State owner + persistence wiring; thin coordinator. |
 
