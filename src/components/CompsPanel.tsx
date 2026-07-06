@@ -1,9 +1,9 @@
 /**
  * Comparable-sales panel: address + beds/baths inputs, the RapidAPI key
  * setup, and the classified results (same street / nearby streets / school
- * district) as stat tiles plus a detail table. Orchestrates the pipeline in
- * `src/comps/`; the median of any bucket can be pushed into the active
- * scenario's home price.
+ * district) as stat tiles plus a detail table. Orchestrates the geocode →
+ * district → sold-search pipeline in `src/comps/`; the median of any bucket
+ * can be pushed into the active scenario's home price.
  */
 
 import { useRef, useState } from "react";
@@ -20,7 +20,7 @@ import {
 import type { CompsCache } from "../comps/storage";
 import { CompsError } from "../comps/types";
 import type { BucketStats } from "../comps/types";
-import { fetchRecentlySold } from "../comps/zillow";
+import { fetchRecentlySold } from "../comps/realtor";
 import { fmtUsd } from "../format";
 import { NumberField } from "./NumberField";
 
@@ -219,10 +219,11 @@ export function CompsPanel({ onUseHomePrice }: Props) {
           API key — {apiKey === "" ? "not set" : "saved in this browser"}
         </summary>
         <p className="hint">
-          Zillow has no official public API; sold data comes from the community
-          "zillow-com1" provider on RapidAPI. Create a free RapidAPI account, subscribe to
-          that API's free tier, and paste your key here. It is stored only in this
-          browser's localStorage and never leaves this machine except toward RapidAPI.
+          Sold data comes from the "Realty in US" API (realtor.com MLS records) on
+          RapidAPI — Zillow offers no public API and RapidAPI's Zillow scrapers were
+          delisted. Create a free RapidAPI account, subscribe to Realty in US's free
+          tier, and paste your key here. It is stored only in this browser's
+          localStorage and never leaves this machine except toward RapidAPI.
         </p>
         <div className="comps-key-row">
           <input

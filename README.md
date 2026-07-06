@@ -58,15 +58,18 @@ Data sources (`src/comps/`):
 | --- | --- | --- |
 | Address → coordinates, street, ZIP, district GEOID | US Census geocoder (JSONP — the service sends no CORS headers) | none |
 | District GEOID → boundary polygon | Census TIGERweb ArcGIS REST (`TIGERweb/School`, layers 0/1/2) | none |
-| Recently-sold houses in the ZIP | `zillow-com1` on RapidAPI | your RapidAPI key |
+| Recently-sold homes in the ZIP | "Realty in US" (apidojo, realtor.com MLS records) on RapidAPI | your RapidAPI key |
 
-**Zillow reality check:** Zillow retired its official public API, so sold
-data comes from a community RapidAPI provider that mirrors Zillow search.
-Create a free RapidAPI account, subscribe to the `zillow-com1` API's free
-tier, and paste the key into the panel (stored in localStorage only — never
-in share URLs or saved plans; same for the address). Respect the provider's
-and Zillow's terms; quotas on free tiers are small, so results are cached
-locally and each run fetches at most two pages.
+**Provider reality check:** Zillow retired its official public API, and as
+of July 2026 RapidAPI has delisted its community Zillow scrapers as well
+(every known gateway host answers "API doesn't exists"). Sold data
+therefore comes from realtor.com via the long-running **Realty in US** API.
+Create a free RapidAPI account, subscribe to that API's free tier, and
+paste the key into the panel (stored in localStorage only — never in share
+URLs or saved plans; same for the address). Quotas on free tiers are small,
+so results are cached locally and each run fetches at most two pages. The
+provider is isolated in [src/comps/realtor.ts](src/comps/realtor.ts) —
+swapping sources touches that one module.
 
 Known limitations: the sales search covers the subject's ZIP, so the
 school-district bucket only tags sales *within that ZIP*; classification
