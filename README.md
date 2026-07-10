@@ -27,6 +27,18 @@ npm run build      # typecheck + production bundle in dist/
 npm run preview    # serve the production build
 ```
 
+## Deploy (GitHub Pages)
+
+Every push to `main` builds and publishes the app to
+<https://nivweisman.github.io/Njord/> via
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) (also
+runnable by hand from the Actions tab). The workflow builds with
+`--base=/Njord/` because project pages serve under the repo subpath —
+a plain `npm run build` produces root-absolute asset URLs that 404 there.
+If the very first run fails at the deploy step with "Pages site not
+found", enable it once: **Settings → Pages → Source: GitHub Actions**,
+then re-run.
+
 ## Features
 
 - **Monthly payment + KPI tiles** — P&I, initial all-in monthly cost, total
