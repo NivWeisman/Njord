@@ -4,10 +4,11 @@
 # The site serves at https://<owner>.github.io/<repo>/, so the build
 # passes --base=/<repo>/ — asset URLs are wrong without it.
 #
-# First-time note: configure-pages tries to enable Pages on the repo
-# automatically. If the deploy step fails with "Pages site not found",
-# flip it once by hand: Settings → Pages → Build and deployment →
-# Source: "GitHub Actions", then re-run the workflow.
+# One-time setup before the first run: Settings → Pages → Build and
+# deployment → Source: "GitHub Actions". The default workflow token is
+# not allowed to create the Pages site itself (configure-pages fails
+# with "Resource not accessible by integration"), so the source must be
+# flipped by hand once; every run after that is fully automatic.
 name: Deploy to GitHub Pages
 
 on:
@@ -35,8 +36,6 @@ jobs:
           node-version: 22
           cache: npm
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - run: npm ci
       - run: npm test
       # npm appends extra args after the script text, so the flag lands on

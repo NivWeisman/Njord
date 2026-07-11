@@ -35,9 +35,9 @@ Every push to `main` builds and publishes the app to
 runnable by hand from the Actions tab). The workflow builds with
 `--base=/Njord/` because project pages serve under the repo subpath —
 a plain `npm run build` produces root-absolute asset URLs that 404 there.
-If the very first run fails at the deploy step with "Pages site not
-found", enable it once: **Settings → Pages → Source: GitHub Actions**,
-then re-run.
+One-time setup before the first run (the workflow token can't create
+the Pages site itself): **Settings → Pages → Source: GitHub Actions**.
+Then push (or re-run the failed workflow) and every deploy is automatic.
 
 ## Features
 
